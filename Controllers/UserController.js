@@ -2,6 +2,7 @@ const {User, Token} = require("../models");
 const {hash, compare} = require("bcrypt");
 const {where} = require("sequelize");
 const {sign} = require("jsonwebtoken");
+const Joi = require("joi");
 
 
 class UserController {
@@ -61,17 +62,21 @@ class UserController {
     }
 
     async update(req, res) {
-        console.log('update',req.user_id)
-        console.log(req.body)
-        const user =  await  User.findOne({where: {id: req.user_id}})
-        await user.update(req.body)
-        await user.save()
-        return res.status(200).json({id: user.id, username: user.username, email: user.email})
+        const schema = Joi.object({
+            username: Joi.string(),
+            email: Joi.string(),
+        })
+        
+        try {
+            await schema.validateAsync(req.body)
+            const user =  await  User.findOne({where: {id: req.user_id}})
+            await user.update(req.body)
+            await user.save()
+            return res.status(200).json({id: user.id, username: user.username, email: user.email})
+        } catch (e) {
+            return res.status(400).json({ error: e.details[0].message });
+        }
     }
-
-
-
-
 }
 
 

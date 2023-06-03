@@ -7,9 +7,9 @@ const router = express()
 router.use((req, res, next)=> {
     verify(req.headers?.token, 'amirSoska', (err, decode)=> {
         if (err) {
-            res.status(402).json('Token was not provided')
+            next();
         } else {
-            req.user_id = decode.userId;   // Add to req object
+            req.user_id = decode.userId;
             next();
         }
     })
