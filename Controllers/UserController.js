@@ -66,7 +66,7 @@ class UserController {
             username: Joi.string(),
             email: Joi.string(),
         })
-        
+
         try {
             await schema.validateAsync(req.body)
             const user =  await  User.findOne({where: {id: req.user_id}})
