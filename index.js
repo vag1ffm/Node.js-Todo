@@ -2,6 +2,7 @@ const express = require('express')
 const {json} = require("express");
 const userRouter = require("./routes/UserRouter");
 const groupRouter = require("./routes/GroupRouter");
+const todoRouter = require("./routes/TodoRouter");
 
 
 
@@ -28,6 +29,7 @@ app.use(json())
 
 app.use('/api', userRouter)
 app.use('/api', groupRouter)
+app.use('/api', todoRouter)
 
 
 

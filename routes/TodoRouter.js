@@ -1,4 +1,4 @@
-const TodoControllers = require("../Controllers/TodoControllers");
+const TodoController = require("../Controllers/TodoController");
 const express = require('express')
 const {verify, decode} = require("jsonwebtoken");
 
@@ -15,10 +15,10 @@ todoRouter.use((req, res, next) => {
     })
 })
 
-todoRouter.post('/todo', TodoControllers.createTodo)
-todoRouter.get('/todo', TodoControllers.getTodo)
-todoRouter.get('/todo', TodoControllers.getAllTodo)
-todoRouter.delete('/todo', TodoControllers.deleteTodo)
+todoRouter.post('/todo', TodoController.createTodo)
+todoRouter.get('/todo', TodoController.getTodo)
+todoRouter.get('/todos', TodoController.getAllTodos)
+todoRouter.delete('/todo', TodoController.deleteTodo)
 
 
 module.exports = todoRouter
