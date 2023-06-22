@@ -1,17 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const User = sequelize.define('User', {
-    username: {
-        type: DataTypes.STRING,
+const Group = sequelize.define('Group', {
+    group_name: {
+        type: DataTypes.UUIDV4,
         allowNull: false,
         unique: true
     },
     password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    email: {
         type: DataTypes.STRING,
         allowNull: false
     }
@@ -19,4 +15,4 @@ const User = sequelize.define('User', {
 
 
 
-module.exports = User
+module.exports = Group

@@ -2,9 +2,9 @@ const userController = require( "../Controllers/UserController");
 const express = require('express')
 const {verify, decode} = require("jsonwebtoken");
 
-const router = express()
+const userRouter = express()
 
-router.use((req, res, next)=> {
+userRouter.use((req, res, next)=> {
     verify(req.headers?.token, 'amirSoska', (err, decode)=> {
         if (err) {
             next();
@@ -15,9 +15,9 @@ router.use((req, res, next)=> {
     })
 })
 
-router.post('/user/auth', userController.create)
-router.post('/user/login', userController.login)
-router.put('/user', userController.update)
-// router.delete('/user/:id')
+userRouter.post('/user/auth', userController.create)
+userRouter.post('/user/login', userController.login)
+userRouter.put('/user', userController.update)
 
-module.exports = router
+
+module.exports = userRouter

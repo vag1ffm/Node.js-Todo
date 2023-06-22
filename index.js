@@ -1,6 +1,7 @@
 const express = require('express')
 const {json} = require("express");
-const router = require("./routes/Router");
+const userRouter = require("./routes/UserRouter");
+const groupRouter = require("./routes/GroupRouter");
 
 
 
@@ -25,7 +26,8 @@ const PORT = 5000
 
 app.use(json())
 
-app.use('/api', router)
+app.use('/api', userRouter)
+app.use('/api', groupRouter)
 
 
 
