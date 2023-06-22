@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 
 const Group = sequelize.define('Group', {
     group_name: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },

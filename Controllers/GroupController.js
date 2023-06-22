@@ -3,12 +3,17 @@ const {hash, compare} = require("bcrypt");
 const {where} = require("sequelize");
 const {sign} = require("jsonwebtoken");
 const Joi = require("joi");
-const {groupSchema} = require("../helpers/schemas");
+const {groupSchema} = require("../utils/schemas");
+const {number} = require("joi");
 
 
 class GroupControllers {
     async createGroup(req, res) {
         console.log(req.user_id)
+        if (req.user_id === undefined) {
+            return res.status(400).json({error: 'Token was not provided'});
+        }
+
         try {
             await groupSchema.validateAsync(req.body)
         } catch (e) {
@@ -61,6 +66,57 @@ class GroupControllers {
         //         }
         //     } else
         //     return res.status(400).send("Отправь мне эти ключи username, email, password")
+    }
+
+    async getGroup(req, res) {
+
+        let participatedGroups = await GroupMembers.findAll({where: {user_id: req.user_id}})
+
+        participatedGroups = participatedGroups.map(group => group.dataValues)
+
+        return res.status(200).json({data: participatedGroups})
+    }
+
+    async deleteGroupMember(req, res) {
+        const { group_id } = req.params;
+
+        const isGroupExist = await Group.findOne({where: {id: group_id}})
+
+        if (isGroupExist === null) {
+            return res.status(400).json({ error: 'Group is not exist' });
+        }
+
+        const GroupMember = await GroupMembers.findOne({where: {group_id: group_id, user_id: req.user_id}})
+
+        if (!GroupMember) {
+            return res.status(400).json({ error: 'User is not in this group' });
+        }
+
+        await GroupMember.destroy()
+        return res.status(204).json({});
+
+
+    }
+
+    async addTodoInGroup(req, res) {
+        const { group_id } = req.params;
+
+        const isGroupExist = await Group.findOne({where: {id: group_id}})
+
+        if (isGroupExist === null) {
+            return res.status(400).json({ error: 'Group is not exist' });
+        }
+
+        const GroupMember = await GroupMembers.findOne({where: {group_id: group_id, user_id: req.user_id}})
+
+        if (!GroupMember) {
+            return res.status(400).json({ error: 'User is not in this group' });
+        }
+
+        await GroupMember.destroy()
+        return res.status(204).json({});
+
+
     }
 
     async login(req, res) {
