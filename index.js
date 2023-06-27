@@ -34,6 +34,6 @@ app.use('/api', todoRouter)
 
 
 app.listen(PORT, ()=> {
-    console.log('Юнис бэка рот ебал на порту', PORT)
+    console.log('Server is running on the port:', PORT)
 })
 
