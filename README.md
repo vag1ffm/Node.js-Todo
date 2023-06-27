@@ -1,6 +1,4 @@
 # Node.js-Todo
-tried to write backend with node.js
-
 
 # Api
 
