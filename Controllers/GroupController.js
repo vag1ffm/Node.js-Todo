@@ -1,6 +1,4 @@
-const {User, Token, Group, GroupMembers} = require("../models");
-const {hash, compare} = require("bcrypt");
-const {where} = require("sequelize");
+const {Group, GroupMembers} = require("../models");
 const {groupSchema} = require("../utils/schemas");
 
 
@@ -16,7 +14,6 @@ class GroupControllers {
         } catch (e) {
             return res.status(400).json({error: e.details[0].message});
         }
-
         const {group_name, password} = req.body
         const isGroupExist = await Group.findOne({where: {group_name: group_name}})
 
