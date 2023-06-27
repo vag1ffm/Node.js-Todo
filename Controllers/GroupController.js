@@ -1,10 +1,7 @@
 const {User, Token, Group, GroupMembers} = require("../models");
 const {hash, compare} = require("bcrypt");
 const {where} = require("sequelize");
-const {sign} = require("jsonwebtoken");
-const Joi = require("joi");
 const {groupSchema} = require("../utils/schemas");
-const {number} = require("joi");
 
 
 class GroupControllers {
@@ -36,36 +33,8 @@ class GroupControllers {
             user_id: req.user_id,
         })
 
-
         return res.status(200).json(newGroup.dataValues);
 
-
-
-        //     const {group_name, password} = req.body
-        //
-        //     if (group_name === undefined || group_name === '') {
-        //         return res.status(400).json('group_name is required')
-        //     } else if (password === undefined || password === '') {
-        //         return res.status(400).json('password is required')
-        //     }
-        //
-        //     if (!!group_name && !!password ) {
-        //
-        //         const isUserExist = await User.findOne({where: {username: username}})
-        //
-        //         if (isUserExist === null) {
-        //             const hashPassword = await hash(password, 10)
-        //             const newUser = await User.create({
-        //                 username, password: hashPassword, email
-        //             })
-        //             return res.status(200).json({
-        //                 id: newUser.id, username: newUser.username, email: newUser.email
-        //             })
-        //         } else {
-        //             return res.status(400).json('username is exist')
-        //         }
-        //     } else
-        //     return res.status(400).send("Отправь мне эти ключи username, email, password")
     }
 
     async getGroup(req, res) {
